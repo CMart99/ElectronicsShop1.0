@@ -21,7 +21,7 @@ import java.awt.SystemColor;
 
 /**
  * @version 1.0
- * @author Carlos Martínez Aldayturriaga
+ * @author Carlos MartÃ­nez Aldayturriaga
  *
  */
 public class StockManagement extends JFrame {
@@ -122,7 +122,7 @@ public class StockManagement extends JFrame {
 		btnRegisterProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (NomProducto.getText().length() > 1 && EAN.getText().length() == 13) {
+				if (NomProducto.getText().length() > 1 && txtEAN.getText().length() == 13) {
 
 					dispose();
 
@@ -130,14 +130,9 @@ public class StockManagement extends JFrame {
 							JOptionPane.YES_NO_CANCEL_OPTION);
 
 					try {
-
-						// System.out.println("INSERT INTO products(Name, EAN, Stock, Price) VALUES
-						// (\""+ NomProducto.getText() + "\", \""+ txtEAN.getText() + "\", \""+
-						// stock.getText() + "\", \""+ Price.getText() + "\");");
 						
 						//Insert product into DB
-						ConexionBD.EjecutarUpdate("INSERT INTO products(ID, Name, EAN, Stock, Price) VALUES (\"" + ID.getText() + "\", \""
-								+ NomProducto.getText() + "\", \"" + txtEAN.getText() + "\", \"" + stock.getText()
+						ConexionBD.EjecutarUpdate("INSERT INTO products(Name, EAN, Stock, Price) VALUES (\"" + NomProducto.getText() + "\", \"" + txtEAN.getText() + "\", \"" + stock.getText()
 								+ "\", \"" + Price.getText() + "\");");
 
 					} catch (SQLException e1) {

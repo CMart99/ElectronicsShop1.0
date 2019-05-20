@@ -2,13 +2,17 @@ package proyecto;
 
 import java.awt.BorderLayout;
 
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,10 +25,10 @@ import java.awt.SystemColor;
 
 /**
  * @version 1.0
- * @author Carlos Martínez Aldayturriaga
+ * @author Carlos MartÃ­nez Aldayturriaga
  *
  */
-public class ProductList extends JFrame{
+public class ProductList extends JFrame {
 
 	/**
 	 * 
@@ -39,7 +43,7 @@ public class ProductList extends JFrame{
 	 * Create the frame.
 	 */
 	public ProductList() {
-		
+
 		new ConexionBD();
 		ConexionBD.Conectar();
 		setResizable(false);
@@ -80,10 +84,6 @@ public class ProductList extends JFrame{
 		txtrProductList.setText("PRODUCT LIST");
 		txtrProductList.setBounds(299, 11, 154, 28);
 		panel.add(txtrProductList);
-		
-		JTextArea ProductID = new JTextArea();
-		ProductID.setBounds(330, 396, 185, 24);
-		panel.add(ProductID);
 
 		DefaultTableModel modelo = new DefaultTableModel();
 		tabla1 = new JTable(modelo);
@@ -92,7 +92,9 @@ public class ProductList extends JFrame{
 		tabla1.setBackground(Color.WHITE);
 		tabla1.setBounds(10, 69, 706, 305);
 		panel.add(tabla1);
-
+		tabla1.setCellSelectionEnabled(true);
+		
+		modelo.addColumn("ID");
 		modelo.addColumn("Name");
 		modelo.addColumn("EAN");
 		modelo.addColumn("Stock");
@@ -102,8 +104,8 @@ public class ProductList extends JFrame{
 
 		try {
 			while (rs.next()) {
-				String[] filas = new String[4];
-				for (int i = 0; i < 4; i++) {
+				String[] filas = new String[5];
+				for (int i = 0; i < 5; i++) {
 					filas[i] = rs.getString(i + 1);
 				}
 				modelo.addRow(filas);
@@ -116,28 +118,39 @@ public class ProductList extends JFrame{
 		scrollBar.setBounds(10, 50, 737, 336);
 		panel.add(scrollBar);
 		scrollBar.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
+		
+		JTextArea ID = new JTextArea();
+		ID.setBounds(261, 396, 211, 22);
+		panel.add(ID);
+		
 		JButton btnAddToCart = new JButton("Add to Cart");
 		btnAddToCart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				
-				Cart c = new Cart();
-				c.setVisible(true);
 
+				dispose();
+				
+				if (ID.getText().length() == 2) {
+
+					try {
+
+						ConexionBD.EjecutarUpdate("SELECT * FROM products");
+
+					} catch (SQLException e1) {
+
+						e1.printStackTrace();
+
+					}
+				} else {
+
+					JOptionPane.showMessageDialog(null, "FATAL ERROR", "Please try again", JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		});
+
 		btnAddToCart.setBackground(SystemColor.activeCaption);
 		btnAddToCart.setBounds(629, 397, 89, 23);
 		panel.add(btnAddToCart);
 		
 		
-		
-		JTextArea txtrEnterProductId = new JTextArea();
-		txtrEnterProductId.setFont(new Font("Maiandra GD", Font.BOLD, 13));
-		txtrEnterProductId.setBackground(SystemColor.activeCaption);
-		txtrEnterProductId.setText("Enter Product ID to Buy:");
-		txtrEnterProductId.setBounds(151, 396, 169, 24);
-		panel.add(txtrEnterProductId);
 	}
 }

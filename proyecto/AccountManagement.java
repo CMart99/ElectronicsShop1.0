@@ -141,6 +141,7 @@ public class AccountManagement extends JFrame {
 		btnUpdateAccount.setBackground(SystemColor.activeCaption);
 		btnUpdateAccount.addActionListener(new ActionListener() {
 			
+			
 			public void actionPerformed(ActionEvent arg0) {
 
 				if (Name.getText().length() > 0) {
@@ -152,8 +153,8 @@ public class AccountManagement extends JFrame {
 
 					try {
 						
-						//Update Query
-						System.out.println("UPDATE usuarios SET Password = \"" + newPass.getText() + "\"  WHERE Nombre = \"" + Name.getText() + "\"");
+						
+						//System.out.println("UPDATE usuarios SET Password = \"" + newPass.getText() + "\"  WHERE Nombre = \"" + Name.getText() + "\"");
 						
 						ConexionBD.EjecutarUpdate("UPDATE usuarios SET Password = \"" + newPass.getText() + "\"  WHERE Nombre = \"" + Name.getText() + "\"");
 

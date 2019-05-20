@@ -13,7 +13,7 @@ public class ConexionBD {
 
 	static String dbName = "stock";
 	static String timeZone = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-	static String url = "jdbc:mysql://localhost:3306/" + dbName + timeZone;
+	static String url = "jdbc:mysql://localhost:3307/" + dbName + timeZone;
 	static String user = "root";
 	static String pass = "manolo";
 	static String driver = "com.mysql.cj.jdbc.Driver";

@@ -21,7 +21,7 @@ import java.awt.SystemColor;
 
 /**
  * @version 1.0
- * @author Carlos MartÃ­nez Aldayturriaga
+ * @author Carlos Martínez Aldayturriaga
  *
  */
 public class StockManagement extends JFrame {
@@ -33,7 +33,6 @@ public class StockManagement extends JFrame {
 	private JPanel contentPane;
 	private JTextField stock;
 	private JTextField Price;
-	private JTextField ID;
 
 	/**
 	 * Create the frame.
@@ -109,7 +108,7 @@ public class StockManagement extends JFrame {
 		
 
 		JTextField txtEAN = new JTextField();
-		RestrictedTextField r1 = new RestrictedTextField(txtEAN, "1234567890123");
+		RestrictedTextField r1 = new RestrictedTextField(txtEAN, "1234567890");
 	    r1.setLimit(13);
 		txtEAN.setForeground(Color.BLACK);
 		txtEAN.setBackground(Color.WHITE);
@@ -144,7 +143,8 @@ public class StockManagement extends JFrame {
 					sm.setVisible(true);
 
 				} else {
-
+					
+					
 					JOptionPane.showMessageDialog(null, "FATAL ERROR", "Please try again", JOptionPane.WARNING_MESSAGE);
 
 				}
@@ -212,27 +212,6 @@ public class StockManagement extends JFrame {
 		txtrMaxCharacters_2.setText("Max. 30 characters");
 		txtrMaxCharacters_2.setBounds(282, 87, 117, 23);
 		panel.add(txtrMaxCharacters_2);
-		
-		//Product ID
-		JTextArea txtrProductId = new JTextArea();
-		txtrProductId.setFont(new Font("Maiandra GD", Font.BOLD, 13));
-		txtrProductId.setBackground(SystemColor.activeCaption);
-		txtrProductId.setText("Product ID:");
-		txtrProductId.setBounds(23, 53, 81, 23);
-		panel.add(txtrProductId);
-		
-		ID = new JTextField();
-		ID.setBounds(114, 54, 158, 20);
-		panel.add(ID);
-		ID.setColumns(10);
-		
-		JTextArea txtrMaxCharacters_3 = new JTextArea();
-		txtrMaxCharacters_3.setBackground(SystemColor.activeCaption);
-		txtrMaxCharacters_3.setForeground(Color.DARK_GRAY);
-		txtrMaxCharacters_3.setFont(new Font("Maiandra GD", Font.BOLD, 11));
-		txtrMaxCharacters_3.setText("Max. 3 characters");
-		txtrMaxCharacters_3.setBounds(282, 54, 117, 22);
-		panel.add(txtrMaxCharacters_3);
 
 	}
 }

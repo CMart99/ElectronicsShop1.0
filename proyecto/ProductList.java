@@ -25,7 +25,7 @@ import java.awt.SystemColor;
 
 /**
  * @version 1.0
- * @author Carlos MartÃ­nez Aldayturriaga
+ * @author Carlos Martínez Aldayturriaga
  *
  */
 public class ProductList extends JFrame {

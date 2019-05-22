@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 20-05-2019 a las 05:16:08
+-- Tiempo de generación: 22-05-2019 a las 04:12:46
 -- Versión del servidor: 5.7.23
 -- Versión de PHP: 7.1.27
 
@@ -21,6 +21,20 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `stock`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `orders`
+--
+
+CREATE TABLE `orders` (
+  `OrderID` bigint(13) NOT NULL,
+  `RecipientName` varchar(20) NOT NULL,
+  `Price` decimal(5,3) NOT NULL,
+  `Address` varchar(50) NOT NULL,
+  `Total` decimal(5,3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -91,7 +105,32 @@ INSERT INTO `products` (`ID`, `Name`, `EAN`, `Stock`, `Price`) VALUES
 (48, 'Light', 4971976949265, 200, '2.75'),
 (49, 'Proximity Sensor', 8670805604776, 300, '1.95'),
 (50, 'Potentiometer', 4758715527676, 740, '1.15'),
-(51, 'Relay', 3080863603522, 250, '0.75');
+(51, 'Relay', 3080863603522, 250, '0.75'),
+(53, 'Prueba', 1231231231231, 12, '5.00');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `sells`
+--
+
+CREATE TABLE `sells` (
+  `ID` int(4) NOT NULL,
+  `Name` varchar(30) NOT NULL,
+  `EAN` bigint(13) NOT NULL,
+  `Stock` smallint(5) NOT NULL,
+  `Price` decimal(4,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `sells`
+--
+
+INSERT INTO `sells` (`ID`, `Name`, `EAN`, `Stock`, `Price`) VALUES
+(3, 'Connector', 2582685331238, 300, '0.75'),
+(4, 'Diode', 2829793958675, 1200, '0.25'),
+(6, 'Resistor', 5615788925534, 1500, '0.20'),
+(10, 'Display', 3765916792452, 200, '3.75');
 
 -- --------------------------------------------------------
 
@@ -110,28 +149,23 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`Nombre`, `Password`, `Email`) VALUES
-('Carlos', '1234', 'carlosma51199@gmail.com'),
 ('aa', '1234', 'aa@aa.es'),
-('Admin', 'admin', 'admin@electronics4everyone.com');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `ventas`
---
-
-CREATE TABLE `ventas` (
-  `Ticket` int(10) NOT NULL,
-  `FechaVenta` date NOT NULL,
-  `Producto` char(20) NOT NULL,
-  `Precio` decimal(3,0) NOT NULL,
-  `Cantidad` int(3) NOT NULL,
-  `Total` decimal(3,0) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+('Admin', 'admin', 'admin@electronics4everyone.com'),
+('Carlos', '1234', 'carlosma51199@gmail.com'),
+('Prueba', '1234', 'prueba@prueba.es'),
+('Prueba2', '1234', 'prueba2@prueba2.com'),
+('Prueba3', '1234', 'prueba3@prueba3.com'),
+('Prueba4', '1234', 'prueba4@prueba4.com');
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`OrderID`);
 
 --
 -- Indices de la tabla `products`
@@ -140,14 +174,32 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indices de la tabla `sells`
+--
+ALTER TABLE `sells`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD UNIQUE KEY `Nombre` (`Nombre`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `OrderID` bigint(13) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `ID` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `ID` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

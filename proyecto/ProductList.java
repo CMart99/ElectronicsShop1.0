@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Carlos Martínez Aldayturriaga
  *
  */
-public class ProductList extends JFrame{
+public class ProductList extends JFrame {
 
 	/**
 	 * 
@@ -40,10 +40,7 @@ public class ProductList extends JFrame{
 	 * Create the frame.
 	 */
 	public ProductList() {
-		
-		
-		
-		
+
 		new ConexionBD();
 		ConexionBD.Conectar();
 		setResizable(false);
@@ -84,21 +81,20 @@ public class ProductList extends JFrame{
 		txtrProductList.setText("PRODUCT LIST");
 		txtrProductList.setBounds(299, 11, 154, 28);
 		panel.add(txtrProductList);
-		
+
 		JTextArea ProductID = new JTextArea();
 		ProductID.setBounds(338, 396, 185, 24);
 		panel.add(ProductID);
 
 		DefaultTableModel modelo = new DefaultTableModel();
-		
+
 		tabla1 = new JTable(modelo);
 		tabla1.setEnabled(false);
 		tabla1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tabla1.setBackground(Color.WHITE);
 		tabla1.setBounds(10, 69, 706, 305);
 		panel.add(tabla1);
-		
-		
+
 		modelo.addColumn("ID");
 		modelo.addColumn("Name");
 		modelo.addColumn("EAN");
@@ -120,56 +116,41 @@ public class ProductList extends JFrame{
 		}
 
 		JScrollPane scrollBar = new JScrollPane(tabla1);
-		
+
 		scrollBar.setBounds(10, 50, 737, 336);
 		panel.add(scrollBar);
 		scrollBar.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 		JButton btnAddToCart = new JButton("Add to Cart");
 		btnAddToCart.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent arg0) {
-				
-				if(ProductID.getText().length() > 0) {
-				dispose();
 
-				JOptionPane.showMessageDialog(null, "Product added succesfully ", "Success",
-						JOptionPane.YES_NO_CANCEL_OPTION);
+			public void actionPerformed(ActionEvent arg0) {
+
+				dispose();
 
 				try {
 
-					// System.out.println("INSERT INTO products(Name, EAN, Stock, Price) VALUES
-					// (\""+ NomProducto.getText() + "\", \""+ txtEAN.getText() + "\", \""+
-					// stock.getText() + "\", \""+ Price.getText() + "\");");
-					
-					//Insert product into DB
-					ConexionBD.EjecutarUpdate("INSERT INTO sells(ID, Name, EAN, Stock, Price) " + "SELECT * FROM products WHERE products.ID = " + ProductID.getText());
-					
+					// Insert product into DB
+					ConexionBD.EjecutarUpdate("INSERT INTO sells(ID, Name, EAN, Stock, Price) "
+							+ "SELECT * FROM products WHERE products.ID = " + ProductID.getText());
+
 					System.out.println();
 				} catch (SQLException e1) {
 
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Product already exists in cart ", "Error",
+							JOptionPane.WARNING_MESSAGE);
+					
 				}
 
 				Cart c = new Cart();
 				c.setVisible(true);
 
-			} else {
-				
-				//System.out.println("INSERT INTO sells(ID, Name, EAN, Stock, Price) " + "SELECT * FROM products WHERE products.ID = " + ProductID.getText());
-				
-				JOptionPane.showMessageDialog(null, "FATAL ERROR", "Please try again", JOptionPane.WARNING_MESSAGE);
-
 			}
-
-		}
-	});
+		});
 		btnAddToCart.setBackground(SystemColor.activeCaption);
 		btnAddToCart.setBounds(597, 397, 121, 23);
 		panel.add(btnAddToCart);
-		
-		
-		
+
 		JTextArea txtrEnterProductId = new JTextArea();
 		txtrEnterProductId.setFont(new Font("Maiandra GD", Font.BOLD, 13));
 		txtrEnterProductId.setBackground(SystemColor.activeCaption);

@@ -129,6 +129,7 @@ public class StockDelete extends JFrame {
 		ID.setColumns(10);
 
 		JTextArea txtrIntroduceEanTo = new JTextArea();
+		txtrIntroduceEanTo.setEditable(false);
 		txtrIntroduceEanTo.setFont(new Font("Maiandra GD", Font.BOLD, 13));
 		txtrIntroduceEanTo.setBackground(SystemColor.activeCaption);
 		txtrIntroduceEanTo.setText("Enter product ID to drop:");
@@ -140,7 +141,7 @@ public class StockDelete extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 
-				if (ID.getText().length() == 2) {
+				if (ID.getText().length() >= 1) {
 
 					dispose();
 

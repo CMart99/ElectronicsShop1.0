@@ -1,6 +1,7 @@
 package proyecto;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -20,8 +21,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.SystemColor;
-
-import proyecto.ProductList;
+import javax.swing.JTextField;
 
 /**
  * @version 1.0
@@ -36,11 +36,13 @@ public class Cart extends JFrame {
 	private static final long serialVersionUID = -977355343226726705L;
 	private JPanel contentPane;
 	private JTable tabla1;
+	private JTextField ID;
 
 	/**
 	 * Create the frame.
 	 */
-	public Cart(){
+	public Cart() {
+
 		setResizable(false);
 		setTitle("https://www.electronics4everyone.com");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -57,6 +59,7 @@ public class Cart extends JFrame {
 		panel.setLayout(null);
 
 		JButton btnBack = new JButton("Back");
+		btnBack.setFont(new Font("Maiandra GD", Font.BOLD, 13));
 		btnBack.setBackground(SystemColor.activeCaption);
 		btnBack.addActionListener(new ActionListener() {
 
@@ -68,7 +71,7 @@ public class Cart extends JFrame {
 			}
 		});
 
-		btnBack.setBounds(20, 397, 89, 23);
+		btnBack.setBounds(10, 423, 89, 23);
 		panel.add(btnBack);
 
 		JTextArea txtrProductList = new JTextArea();
@@ -79,10 +82,6 @@ public class Cart extends JFrame {
 		txtrProductList.setText("Shopping Cart");
 		txtrProductList.setBounds(299, 11, 154, 28);
 		panel.add(txtrProductList);
-		
-		JTextArea ProductID = new JTextArea();
-		ProductID.setBounds(330, 396, 185, 24);
-		panel.add(ProductID);
 
 		DefaultTableModel modelo = new DefaultTableModel();
 		tabla1 = new JTable(modelo);
@@ -92,17 +91,18 @@ public class Cart extends JFrame {
 		tabla1.setBounds(10, 69, 706, 305);
 		panel.add(tabla1);
 
+		modelo.addColumn("ID");
 		modelo.addColumn("Name");
 		modelo.addColumn("EAN");
 		modelo.addColumn("Stock");
 		modelo.addColumn("Price");
 
-		ResultSet rs = ConexionBD.EjecutarSentencia("SELECT * FROM products WHERE products.ID =  " + ProductList.ProductID);
+		ResultSet rs = ConexionBD.EjecutarSentencia("SELECT * FROM sells");
 
 		try {
 			while (rs.next()) {
-				String[] filas = new String[4];
-				for (int i = 0; i < 4; i++) {
+				String[] filas = new String[5];
+				for (int i = 0; i < 5; i++) {
 					filas[i] = rs.getString(i + 1);
 				}
 				modelo.addRow(filas);
@@ -117,50 +117,68 @@ public class Cart extends JFrame {
 		scrollBar.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 		JButton btnAddToCart = new JButton("Proceed To Checkout");
+		btnAddToCart.setFont(new Font("Maiandra GD", Font.BOLD, 13));
 		btnAddToCart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				if (ProductID.getText().length() > 0) {
 
-					dispose();
-					
-					Cart c = new Cart();
-					c.setVisible(true);
+				dispose();
 
-					JOptionPane.showMessageDialog(null, "Product Added to Cart ", "",
-							JOptionPane.INFORMATION_MESSAGE);
-
-					try {
-
-						ConexionBD.EjecutarUpdate("UPDATE products SET Stock = \"" + ProductID.getText() + "\" WHERE products.ID = " + ProductList.ProductID);
-
-					} catch (SQLException e2) {
-
-						e2.printStackTrace();
-					}
-
-					UpdateProduct up = new UpdateProduct();
-					up.setVisible(true);
-
-				} else {
-
-					JOptionPane.showMessageDialog(null, "Error ", "Please try again", JOptionPane.WARNING_MESSAGE);
-
-				}
+				Checkout co = new Checkout();
+				co.setVisible(true);
 
 			}
 		});
 		btnAddToCart.setBackground(SystemColor.activeCaption);
-		btnAddToCart.setBounds(583, 397, 135, 23);
+		btnAddToCart.setBounds(555, 423, 192, 23);
 		panel.add(btnAddToCart);
-		
-		
-		
-		JTextArea txtrEnterProductId = new JTextArea();
-		txtrEnterProductId.setFont(new Font("Maiandra GD", Font.BOLD, 13));
-		txtrEnterProductId.setBackground(SystemColor.activeCaption);
-		txtrEnterProductId.setText("Enter Product ID to Buy:");
-		txtrEnterProductId.setBounds(151, 396, 169, 24);
-		panel.add(txtrEnterProductId);
+
+		JButton btnDropFromCart = new JButton("Drop from Cart");
+		btnDropFromCart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				if (ID.getText().length() >= 1) {
+
+					dispose();
+
+					JOptionPane.showMessageDialog(null, "Product dropped ", "Success",
+							JOptionPane.YES_NO_CANCEL_OPTION);
+
+					try {
+
+					
+						ConexionBD.EjecutarUpdate("DELETE FROM sells WHERE ID = " + ID.getText());
+					} catch (SQLException e1) {
+
+						e1.printStackTrace();
+					}
+
+					Cart c = new Cart();
+					c.setVisible(true);
+
+				} else {
+
+					JOptionPane.showMessageDialog(null, "Product doesn't exist in cart", "Please try with another ID", JOptionPane.WARNING_MESSAGE);
+
+				}
+			}
+		});
+
+		btnDropFromCart.setFont(new Font("Maiandra GD", Font.BOLD, 13));
+		btnDropFromCart.setBackground(SystemColor.activeCaption);
+		btnDropFromCart.setBounds(375, 397, 154, 23);
+		panel.add(btnDropFromCart);
+
+		ID = new JTextField();
+		ID.setBounds(231, 397, 134, 21);
+		panel.add(ID);
+		ID.setColumns(10);
+
+		JTextArea txtrProductId = new JTextArea();
+		txtrProductId.setEditable(false);
+		txtrProductId.setBackground(SystemColor.activeCaption);
+		txtrProductId.setFont(new Font("Maiandra GD", Font.BOLD, 13));
+		txtrProductId.setText("Product ID:");
+		txtrProductId.setBounds(143, 397, 89, 23);
+		panel.add(txtrProductId);
 	}
 }

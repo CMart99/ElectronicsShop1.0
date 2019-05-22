@@ -85,7 +85,7 @@ public class Register extends JFrame {
 				login.setVisible(true);
 
 				if (pass1.getText().equals(pass2.getText()) && usuario.getText().length() > 1 && pass1.getText().length() > 1) {
-					System.out.println("Registro exitoso");
+					
 					
 					try {
 						
@@ -93,10 +93,13 @@ public class Register extends JFrame {
 								+ usuario.getText() + "\", \"" + pass1.getText() + "\", \"" + email.getText()
 								+ "\");");
 						
+						JOptionPane.showMessageDialog(null, "Register successful", "Success", JOptionPane.INFORMATION_MESSAGE);
 					}catch (SQLException e1){
 						
-						e1.printStackTrace();
 						
+						JOptionPane.showMessageDialog(null, "User already registered", "Error", JOptionPane.ERROR_MESSAGE);
+						
+						e1.printStackTrace();
 					}
 				} else {
 

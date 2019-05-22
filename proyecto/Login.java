@@ -67,6 +67,7 @@ public class Login extends JFrame {
 
 		// Register button
 		JButton register = new JButton("Register");
+		register.setFont(new Font("Maiandra GD", Font.BOLD, 13));
 		register.setBackground(SystemColor.activeCaption);
 		register.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -86,6 +87,8 @@ public class Login extends JFrame {
 		txtrUsuario.setText("User");
 		txtrUsuario.setBounds(110, 37, 41, 23);
 		panel.add(txtrUsuario);
+		
+		
 		// Password
 		JTextArea txtrPasswd = new JTextArea();
 		txtrPasswd.setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -94,11 +97,6 @@ public class Login extends JFrame {
 		txtrPasswd.setText("Password");
 		txtrPasswd.setBounds(91, 86, 75, 23);
 		panel.add(txtrPasswd);
-
-		pass1 = new JPasswordField();
-		pass1.setBackground(Color.WHITE);
-		pass1.setBounds(176, 91, 156, 21);
-		panel.add(pass1);
 		
 		try {
 			u = RememberUname.remember();
@@ -123,8 +121,13 @@ public class Login extends JFrame {
 		rememberuname.setBackground(SystemColor.activeCaption);
 		rememberuname.setBounds(240, 199, 143, 23);
 		panel.add(rememberuname);
+		
+		pass1 = new JPasswordField();
+		pass1.setBounds(176, 90, 153, 23);
+		panel.add(pass1);
 
 		JButton login = new JButton("Login");
+		login.setFont(new Font("Maiandra GD", Font.BOLD, 13));
 		login.addActionListener(new ActionListener() {
 			/**
 			 * Login button
@@ -176,6 +179,7 @@ public class Login extends JFrame {
 		panel.add(login);
 
 		JTextArea txtrWannaLoginEasily = new JTextArea();
+		txtrWannaLoginEasily.setEditable(false);
 		txtrWannaLoginEasily.setFont(new Font("Maiandra GD", Font.BOLD, 13));
 		txtrWannaLoginEasily.setBackground(SystemColor.activeCaption);
 		txtrWannaLoginEasily.setText("Wanna login easily next time?");
@@ -218,6 +222,8 @@ public class Login extends JFrame {
 		btnAdminLogin.setBackground(SystemColor.activeCaption);
 		btnAdminLogin.setBounds(10, 11, 141, 23);
 		panel.add(btnAdminLogin);
+		
+		
 
 	}
 }
